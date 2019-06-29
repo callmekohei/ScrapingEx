@@ -59,7 +59,7 @@ Public Sub Sample_Loto6()
 
     ''' イミディエイトウィンドウにて取得したデータを表示します
     Dim v
-    For Each v In ArrTable(doc.CSS("table.typeTK").Index(0).RowTable, True)(1)
+    For Each v In tableArr
         Debug.Print Join(v, " ")
     Next v
 
