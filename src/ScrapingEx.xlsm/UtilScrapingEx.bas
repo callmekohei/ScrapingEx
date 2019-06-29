@@ -8,7 +8,7 @@ Option Explicit
 
 ''' StdRegProv class (The StdRegProv class contains methods that manipulate system registry keys and values. )
 ''' https://docs.microsoft.com/en-us/previous-versions/windows/desktop/regprov/stdregprov
-Private Enum HKeyEnum
+Private Enum HKeysEnum
     HKEY_CLASSES_ROOT = &H80000000
     HKEY_CURRENT_USER = &H80000001
     HKEY_LOCAL_MACHINE = &H80000002
@@ -64,25 +64,26 @@ Private Sub prepareIE()
     Dim wmiSrv As Object: Set wmiSrv = wmi.ConnectServer(".", "root\default")
     Dim oReg As Object:   Set oReg = wmiSrv.Get("StdRegProv")
 
-    Const HKEY_LOCAL_MACHINE As Long = &H80000001
+'''HKEY_CURRENT_USER
+    Const HKEY_CURRENT_USER As Long = HKeysEnum.HKEY_CURRENT_USER
 
     ''' ContinuousBrowsing
     Const strKeyPath_ContinuousBrowsing As String = "Software\Microsoft\Internet Explorer\ContinuousBrowsing"
     Const strValueName_ContinuousBrowsing As String = "Enabled"
     Const dwValue_ContinuousBrowsing As Long = 0  ''' 0 : Disabled , 1 : Enabled
-    oReg.SetDWORDValue HKEY_LOCAL_MACHINE, strKeyPath_ContinuousBrowsing, strValueName_ContinuousBrowsing, dwValue_ContinuousBrowsing
+    oReg.SetDWORDValue HKEY_CURRENT_USER, strKeyPath_ContinuousBrowsing, strValueName_ContinuousBrowsing, dwValue_ContinuousBrowsing
 
     ''' Isolation64Bit
     Const strKeyPath_Isolation64Bit As String = "Software\Microsoft\Internet Explorer\Main"
     Const strValueName_Isolation64Bit As String = "Isolation64Bit"
     Const dwValue_Isolation64Bit As Long = 0
-    oReg.SetDWORDValue HKEY_LOCAL_MACHINE, strKeyPath_Isolation64Bit, strValueName_Isolation64Bit, dwValue_Isolation64Bit
+    oReg.SetDWORDValue HKEY_CURRENT_USER, strKeyPath_Isolation64Bit, strValueName_Isolation64Bit, dwValue_Isolation64Bit
 
     ''' Isolation
     Const strKeyPath_Isolation As String = "Software\Microsoft\Internet Explorer\Main"
     Const strValueName_Isolation As String = "Isolation"
     Const strValue_Isolation As String = "PMIL"
-    oReg.SetStringValue HKEY_LOCAL_MACHINE, strKeyPath_Isolation, strValueName_Isolation, strValue_Isolation
+    oReg.SetStringValue HKEY_CURRENT_USER, strKeyPath_Isolation, strValueName_Isolation, strValue_Isolation
 
     Set wmi = Nothing
     Set wmiSrv = Nothing
@@ -96,23 +97,23 @@ Private Sub HomepageBlankOnly()
     Dim wmiSrv As Object: Set wmiSrv = wmi.ConnectServer(".", "root\default")
     Dim oReg As Object:   Set oReg = wmiSrv.Get("StdRegProv")
 
-    Const HKEY_LOCAL_MACHINE As Long = &H80000001
+    Const HKEY_CURRENT_USER As Long = HKeysEnum.HKEY_CURRENT_USER
     Const strKeyPath As String = "Software\Microsoft\Internet Explorer\Main"
 
     ''' delete second start page
     Const strValueName_SndStartPage As String = "Secondary Start Pages"
-    Dim szValue_SndStartPage As Variant: oReg.GetMultiStringValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName_SndStartPage, szValue_SndStartPage
+    Dim szValue_SndStartPage As Variant: oReg.GetMultiStringValue HKEY_CURRENT_USER, strKeyPath, strValueName_SndStartPage, szValue_SndStartPage
     If IsArray(szValue_SndStartPage) Then
-        oReg.DeleteValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName_SndStartPage
+        oReg.DeleteValue HKEY_CURRENT_USER, strKeyPath, strValueName_SndStartPage
     End If
 
     ''' make fist start page as blank page
     Const strValueName_FstStartPage As String = "Start Page"
     Dim szValue_FstStartPage As String
-    oReg.GetStringValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName_FstStartPage, szValue_FstStartPage
+    oReg.GetStringValue HKEY_CURRENT_USER, strKeyPath, strValueName_FstStartPage, szValue_FstStartPage
 
     If szValue_FstStartPage <> "about:blank" Then
-        oReg.SetStringValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName_FstStartPage, "about:blank"
+        oReg.SetStringValue HKEY_CURRENT_USER, strKeyPath, strValueName_FstStartPage, "about:blank"
     End If
 
     Set wmi = Nothing
@@ -128,12 +129,12 @@ Public Sub NotPromptClientCertificate(ByVal aZone As ZoneEnum)
     Dim wmiSrv As Object: Set wmiSrv = wmi.ConnectServer(".", "root\default")
     Dim oReg As Object:   Set oReg = wmiSrv.Get("StdRegProv")
 
-    Const HKEY_LOCAL_MACHINE As Long = &H80000001
+    Const HKEY_CURRENT_USER As Long = HKeysEnum.HKEY_CURRENT_USER
 
     Dim strKeyPath As String: strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\" & CStr(aZone)
     Const strValueName As String = "1A04"
     Const dwValue As Long = 0  ''' 0 : do not prompt , 3 : prompt
-    oReg.SetDWORDValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName, dwValue
+    oReg.SetDWORDValue HKEY_CURRENT_USER, strKeyPath, strValueName, dwValue
 
 End Sub
 
@@ -144,12 +145,12 @@ Public Sub PromptClientCertificate(ByVal aZone As ZoneEnum)
     Dim wmiSrv As Object: Set wmiSrv = wmi.ConnectServer(".", "root\default")
     Dim oReg As Object:   Set oReg = wmiSrv.Get("StdRegProv")
 
-    Const HKEY_LOCAL_MACHINE As Long = &H80000001
+    Const HKEY_CURRENT_USER As Long = HKeysEnum.HKEY_CURRENT_USER
 
     Dim strKeyPath As String: strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\" & CStr(aZone)
     Const strValueName As String = "1A04"
     Const dwValue As Long = 3  ''' 0 : do not prompt , 3 : prompt
-    oReg.SetDWORDValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName, dwValue
+    oReg.SetDWORDValue HKEY_CURRENT_USER, strKeyPath, strValueName, dwValue
 
 End Sub
 
@@ -159,14 +160,14 @@ Public Sub AddURLOnTrustedSitesZone(ByVal aURL As String)
     Dim wmiSrv As Object: Set wmiSrv = wmi.ConnectServer(".", "root\default")
     Dim oReg As Object:   Set oReg = wmiSrv.Get("StdRegProv")
 
-    Const HKEY_LOCAL_MACHINE As Long = &H80000001
+    Const HKEY_CURRENT_USER As Long = HKeysEnum.HKEY_CURRENT_USER
 
     Dim strKeyPath As String: strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\" & aURL & "\www"
-    oReg.CreateKey HKEY_LOCAL_MACHINE, strKeyPath
+    oReg.CreateKey HKEY_CURRENT_USER, strKeyPath
 
     Const strValueName As String = "https"
     Const dwValue As Long = 2
-    oReg.SetDWORDValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName, dwValue
+    oReg.SetDWORDValue HKEY_CURRENT_USER, strKeyPath, strValueName, dwValue
 
 End Sub
 
@@ -176,9 +177,9 @@ Public Sub RemoveURLOnTrustedSitesZone(ByVal aURL As String)
     Dim wmiSrv As Object: Set wmiSrv = wmi.ConnectServer(".", "root\default")
     Dim oReg As Object:   Set oReg = wmiSrv.Get("StdRegProv")
 
-    Const HKEY_LOCAL_MACHINE As Long = &H80000001
+    Const HKEY_CURRENT_USER As Long = HKeysEnum.HKEY_CURRENT_USER
     Dim strKeyPath As String: strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\" & aURL
-    oReg.DeleteKey HKEY_LOCAL_MACHINE, strKeyPath
+    oReg.DeleteKey HKEY_CURRENT_USER, strKeyPath
 
 End Sub
 
