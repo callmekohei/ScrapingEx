@@ -6,64 +6,64 @@ Attribute VB_Name = "Sample"
 ''' --------------------------------------------------------
 Option Explicit
 
-''' ƒ„ƒz[‚ÅŒŸõ‚·‚é
+''' ãƒ¤ãƒ›ãƒ¼ã§æ¤œç´¢ã™ã‚‹
 Public Sub sample_yahoo()
 
-    ''' ƒXƒNƒŒƒCƒsƒ“ƒO‚d‚˜‚ğg‚¦‚é‚æ‚¤‚É‚µ‚Ü‚·
+    ''' ã‚¹ã‚¯ãƒ¬ã‚¤ãƒ”ãƒ³ã‚°ï¼¥ï½˜ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«ã—ã¾ã™
     Dim doc As ScrapingEx: Set doc = New ScrapingEx
 
-    ''' ƒ„ƒz[‚Ìƒz[ƒ€ƒy[ƒW‚ğŠJ‚«‚Ü‚·
+    ''' ãƒ¤ãƒ›ãƒ¼ã®ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™
     doc.GotoPage "https://www.yahoo.co.jp/"
 
-    ''' ŒŸõ‘‹‚É VBA ‚Æ“ü—Í‚µ‚Ü‚·
+    ''' æ¤œç´¢çª“ã« VBA ã¨å…¥åŠ›ã—ã¾ã™
     doc.ID("srchtxt").FieldValue "VBA"
 
-    ''' ŒŸõƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ü‚·
+    ''' æ¤œç´¢ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¾ã™
     doc.ID("srchbtn").Click
 
 End Sub
 
-''' ƒO[ƒOƒ‹‚ÅŒŸõ‚·‚é
+''' ã‚°ãƒ¼ã‚°ãƒ«ã§æ¤œç´¢ã™ã‚‹
 Public Sub sample_google()
 
-    ''' ƒXƒNƒŒƒCƒsƒ“ƒO‚d‚˜‚ğg‚¦‚é‚æ‚¤‚É‚µ‚Ü‚·
+    ''' ã‚¹ã‚¯ãƒ¬ã‚¤ãƒ”ãƒ³ã‚°ï¼¥ï½˜ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«ã—ã¾ã™
     Dim doc As ScrapingEx: Set doc = New ScrapingEx
 
-    ''' ƒO[ƒOƒ‹‚Ìƒz[ƒ€ƒy[ƒW‚ğŠJ‚«‚Ü‚·
+    ''' ã‚°ãƒ¼ã‚°ãƒ«ã®ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™
     doc.GotoPage "https://www.google.com/"
 
-    ''' ŒŸõ‘‹‚É VBA ‚Æ“ü—Í‚µ‚Ü‚·
+    ''' æ¤œç´¢çª“ã« VBA ã¨å…¥åŠ›ã—ã¾ã™
     doc.At_CSS("#tsf > div:nth-child(2) > div > div.RNNXgb > div > div.a4bIc > input").FieldValue "VBA"
 
-    ''' ŒŸõƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ü‚·
+    ''' æ¤œç´¢ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¾ã™
     doc.At_CSS("#tsf > div:nth-child(2) > div > div.FPdoLc.VlcLAe > center > input.gNO89b").Click
 
 End Sub
 
-''' ƒƒg‚U‚ÌÅV‚ÌŒ‹‰Ê‚ğæ“¾‚·‚é
+''' ãƒ­ãƒˆï¼–ã®æœ€æ–°ã®çµæœã‚’å–å¾—ã™ã‚‹
 Public Sub Sample_Loto6()
 
-    ''' ƒXƒNƒŒƒCƒsƒ“ƒO‚d‚˜‚ğg‚¦‚é‚æ‚¤‚É‚µ‚Ü‚·
+    ''' ã‚¹ã‚¯ãƒ¬ã‚¤ãƒ”ãƒ³ã‚°ï¼¥ï½˜ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«ã—ã¾ã™
     Dim doc As ScrapingEx: Set doc = New ScrapingEx
 
-    ''' ƒƒg‚U‚Ìƒz[ƒ€ƒy[ƒW‚ğŠJ‚«‚Ü‚·
+    ''' ãƒ­ãƒˆï¼–ã®ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™
     doc.GotoPage "https://www.mizuhobank.co.jp/retail/takarakuji/loto/loto6/index.html"
 
-    ''' ƒƒg‚U‚ÌÅV‚ÌŒ‹‰Ê•\‚ÌƒLƒƒƒŠ[ƒI[ƒo[‚Ì‹àŠz‚ÌƒZƒ‹‚ª‹ó”’‚Å‚È‚¢ó‘Ô‚É‚È‚é‚Ü‚Å‘Ò‚¿‚Ü‚·
+    ''' ãƒ­ãƒˆï¼–ã®æœ€æ–°ã®çµæœè¡¨ã®ã‚­ãƒ£ãƒªãƒ¼ã‚ªãƒ¼ãƒãƒ¼ã®é‡‘é¡ã®ã‚»ãƒ«ãŒç©ºç™½ã§ãªã„çŠ¶æ…‹ã«ãªã‚‹ã¾ã§å¾…ã¡ã¾ã™
     Dim selector As String: selector = "#mainCol > article > section > section > section > div > div.sp-none > table:nth-child(1) > tbody > tr:nth-child(10) > td > strong"
     doc.Until_TextMatches selector, "[^ \t\n\r\f]"
 
-    ''' ƒƒg‚U‚ÌÅV‚ÌŒ‹‰Ê•\‚ğ”z—ñ‚É‚µ‚Ü‚·
+    ''' ãƒ­ãƒˆï¼–ã®æœ€æ–°ã®çµæœè¡¨ã‚’é…åˆ—ã«ã—ã¾ã™
     Dim tableArr As Variant
     tableArr = ArrTable(doc.CSS("table.typeTK").Index(0).RowTable, True)(1)
 
-    ''' ƒCƒ~ƒfƒBƒGƒCƒgƒEƒBƒ“ƒhƒE‚É‚Äæ“¾‚µ‚½ƒf[ƒ^‚ğ•\¦‚µ‚Ü‚·
+    ''' ã‚¤ãƒŸãƒ‡ã‚£ã‚¨ã‚¤ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ã¦å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºã—ã¾ã™
     Dim v
     For Each v In tableArr
         Debug.Print Join(v, " ")
     Next v
 
-    ''' ƒuƒ‰ƒEƒUi‚h‚dj‚ğ•Ğ•t‚¯‚Ü‚·
+    ''' ãƒ–ãƒ©ã‚¦ã‚¶ï¼ˆï¼©ï¼¥ï¼‰ã‚’ç‰‡ä»˜ã‘ã¾ã™
     doc.Quit
     Set doc = Nothing
 
