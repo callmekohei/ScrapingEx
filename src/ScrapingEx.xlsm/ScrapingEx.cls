@@ -701,3 +701,27 @@ Public Sub ClickTableCell(ByVal tblCell As Object)
     LoadBrowser
     DoEvents: Sleep 3: Set gDoc = gIE.document
 End Sub
+
+''' Visit a url on already ie browser
+Public Sub gotoPageWithReadyBrowser(ByVal url As String)
+
+    Dim shellObj As Object: Set shellObj = CreateObject("Shell.Application")
+
+    Dim wnd As Object
+    For Each wnd In shellObj.Windows
+        If wnd.Name = "Internet Explorer" Then
+            If wnd.LocationURL = url Then
+                Set gIE = wnd
+                Set gDoc = gIE.document
+                GoTo Escape
+            End If
+        End If
+    Next wnd
+
+    Set shellObj = Nothing
+    MsgBox "Can not catch"
+    End
+
+Escape:
+    Set shellObj = Nothing
+End Sub
