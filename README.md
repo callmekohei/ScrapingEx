@@ -10,7 +10,7 @@ MIT license
 
 ## Respect
 [Victor Zevallos](https://github.com/vba-dev/vba-Scraping)  
-[kumatti1](https://gist.github.com/kumatti1/6b68ea65fdfc9ecf727f)
+[kumatti1](https://gist.github.com/kumatti1/6b68ea65fdfc9ecf727f) ( twitter @kumatti1 )
 
 
 ## 外部ライブラリ
