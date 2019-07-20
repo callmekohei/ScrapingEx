@@ -1,3 +1,6 @@
+[![MIT-LICENSE](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)]( https://github.com/callmekohei/ScrapingEx/blob/master/LICENSE)
+
+
 # ScrapingEx
 
 `VBA`と`IE(Internet Explore)`でホームページからデータを取得する便利ライブラリーです
