@@ -26,18 +26,35 @@ Public Enum ZoneEnum
     RestrictedSitesZone = 4
 End Enum
 
+''' ShowWindow
+#If VBA7 Then
+    Private Declare PtrSafe Function ShowWindow Lib "user32" (ByVal hWnd As LongPtr, ByVal nCmdShow As Long) As Boolean
+#Else
+    Private Declare Function ShowWindow Lib "user32" (ByVal hWnd As Long, ByVal nCmdShow As Long) As Boolean
+#End If
+
+''' SetForegroundWindow
+#If VBA7 Then
+    Private Declare PtrSafe Function SetForegroundWindow Lib "user32" (ByVal hWnd As LongPtr) As Long
+#Else
+    Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
+#End If
+
+''' IsZoomed
+Private Declare Function IsZoomed Lib "user32" (ByVal hWnd As Long) As Long
+
 #If VBA7 Then
     Private Declare PtrSafe Function QueryPerformanceFrequency Lib "kernel32" (ByRef frequency As Double) As LongPtr
     Private Declare PtrSafe Function QueryPerformanceCounter Lib "kernel32" (ByRef procTime As Double) As LongPtr
     Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal ms As Long) ''' param type is DWWORD
-    Private Declare PtrSafe Function SetForegroundWindow Lib "user32" (ByVal hwnd As LongPtr) As Long
-    Private Declare PtrSafe Function IsWindowVisible Lib "user32" (ByVal hwnd As LongPtr) As Long ''' C++ Bool is VBA's Long
+'    Private Declare PtrSafe Function SetForegroundWindow Lib "user32" (ByVal hWnd As LongPtr) As Long
+    Private Declare PtrSafe Function IsWindowVisible Lib "user32" (ByVal hWnd As LongPtr) As Long ''' C++ Bool is VBA's Long
 #Else
     Private Declare Function QueryPerformanceFrequency Lib "kernel32" (ByRef frequency As Double) As Long
     Private Declare Function QueryPerformanceCounter Lib "kernel32" (ByRef procTime As Double) As Long
     Private Declare Sub Sleep Lib "kernel32" (ByVal ms As Long)
-    Private Declare Function SetForegroundWindow Lib "user32" (ByVal hwnd As Long) As Long
-    Private Declare Function IsWindowVisible Lib "user32" (ByVal hwnd As Long) As Long
+'    Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
+    Private Declare Function IsWindowVisible Lib "user32" (ByVal hWnd As Long) As Long
 #End If
 
 Public Sub BeforeScrapingWithIE()
@@ -353,4 +370,26 @@ Catch:
         Case Else
             MsgBox Err.Description & vbCrLf & Err.Number
     End Select
+End Sub
+
+''' put InternetExplorer front
+Public Sub IEForeGround(ByVal doc As Variant, ByVal ieTitelName As String)
+    
+    ''' put ie front
+    On Error Resume Next
+        Do
+            SendKeys "%{Esc}"
+            koffeetime.Wait 500
+        Loop While doc.IEObj.document.Title <> ieTitelName
+    On Error GoTo 0
+    
+    ''' put ie front again
+    SetForegroundWindow (doc.IEObj.hWnd)
+    
+    ''' maximize ie
+    Do
+        ShowWindow doc.IEObj.hWnd, 3
+        koffeetime.Wait 300
+    Loop Until Not (IsZoomed(doc.IEObj.hWnd))
+    
 End Sub
