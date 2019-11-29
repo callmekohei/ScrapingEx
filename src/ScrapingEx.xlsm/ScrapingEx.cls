@@ -696,6 +696,10 @@ Public Sub Click()
     DoEvents: Sleep 3: Set gDoc = gIE.document
 End Sub
 
+Public Sub ClickLight()
+    gElement.Click
+End Sub
+                                                                                                                  
 Public Sub ClickTableCell(ByVal tblCell As Object)
     tblCell.children.Item(0).Click
     LoadBrowser
