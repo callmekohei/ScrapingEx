@@ -1,3 +1,4 @@
+Attribute VB_Name = "UtilScrapingEx"
 ''' --------------------------------------------------------
 '''  FILE    : UtilScrapingEx.bas
 '''  AUTHOR  : callmekohei <callmekohei at gmail.com>
